@@ -1,7 +1,7 @@
 from django.urls import path
-
-from . import views
+from .views import EmployeesViewSet
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('',EmployeesViewSet.as_view({'get': 'list', 'post': 'create'}), name='employee'),
+    path('<int:pk>', EmployeesViewSet.as_view({'delete': 'delete'}), name='delete-employee'),
 ]
