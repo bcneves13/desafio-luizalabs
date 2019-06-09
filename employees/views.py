@@ -30,8 +30,11 @@ class EmployeesViewSet(viewsets.ModelViewSet):
     		return Response(status=422)
 
     	queryset = Employees.objects.create(name=name, email=email, department=department)
-
-    	return Response(queryset.save())
+    	queryset.save()
+    	##Show new update of the list
+    	queryset = Employees.objects.all().order_by('id')
+    	serializer = EmployeesSerializer(queryset, many=True)
+    	return JsonResponse(serializer.data, safe=False)
 
     @action(detail=True, methods=['delete'])
     def delete(self, request, pk):
